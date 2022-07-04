@@ -7,10 +7,6 @@ lib
 coverage
 
 .DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
 .docz
 .vscode
 

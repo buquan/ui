@@ -5,4 +5,5 @@ public/
 node_modules/
 .docz/
 docs/
+.yalc/
 mock/

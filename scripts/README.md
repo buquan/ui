@@ -6,12 +6,9 @@
 
 ## todo 
 
-1. jest
-
-2. version
-
-3. docs release
-
-4. component release
-
-5. lint
+# todo
+1. gh-pages文档部署 -> done
+3. 静态资源 (high)
+2. 打umd开发环境包 (low)
+4. jest 配置 (low)
+5. work 打npm包和文档部署 (high)

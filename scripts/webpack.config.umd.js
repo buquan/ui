@@ -1,11 +1,8 @@
 const fs = require('fs');
 const path = require('path');
-const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const nodeExternals = require('webpack-node-externals');
-const postcssPresetEnv = require('postcss-preset-env');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
 const resolve = (dir) => path.join(__dirname, '.', dir);
@@ -20,13 +17,13 @@ const distDir = path.join(process.cwd(), 'dist');
 
 module.exports = {
   mode: 'production',
-  entry: {[name]: './src/index.js'},
+  entry: {[name]: './src/index.umd.js'},
   output: {
     path: distDir,
-    filename: '[name].min.js',
-    // 采用通用模块定义
+    filename: 'index.min.js',
     libraryTarget: 'umd',
-    library: name
+    library: name,
+    libraryExport: 'default'
   },
   devtool: '#source-map',
   module: {
@@ -38,85 +35,55 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader'
+          }
+        ]
+      },
+      {
+        test: /\.(jpg|png|gif|svg)$/,
         use: {
-          loader: 'babel-loader'
+          loader: 'url-loader',
+          options: {
+            limit: 1000000000,
+            outputPath: 'assets'
+          }
         }
       },
       {
-        test: /\.(pc|sc|c)ss$/,
+        test: /\.less$|\.css$/,
         use: [
           MiniCssExtractPlugin.loader,
           {
-            loader: 'css-loader',
-            options: {
-              sourceMap: true
-            }
+            loader: 'css-loader'
           },
           {
-            loader: 'postcss-loader',
-            options: {
-              ident: 'postcss',
-              sourceMap: true,
-              plugins: () => [
-                postcssPresetEnv({
-                  stage: 3,
-                  features: {
-                    'custom-properties': true,
-                    'nesting-rules': true
-                  },
-                  browsers: 'last 2 versions'
-                })
-              ]
-            }
+            loader: 'postcss-loader'
+          },
+          {
+            loader: 'less-loader',
+            options: {javascriptEnabled: true}
           }
         ]
       }
     ]
   },
-  resolve: {
-    enforceExtension: false,
-    extensions: ['.js', '.jsx', '.json', '.less', '.css']
-  },
-  // 注意：本地预览的时候要注释，否则报 require undefined
-  // https://stackoverflow.com/questions/45818937/webpack-uncaught-referenceerror-require-is-not-defined
-  externals: [nodeExternals()],
   plugins: [
-    new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: [distDir]
-    }),
     new MiniCssExtractPlugin({
-      filename: '[name].css'
-    }),
-    new webpack.BannerPlugin(
-      ` \n ${name} v${version} \n ${description} ${fs.readFileSync(
-        path.join(process.cwd(), 'LICENSE')
-      )}`
-    )
+      filename: 'index.min.css'
+    })
   ],
-  // 压缩js
+  externals: {
+    react: 'React',
+    'react-dom': 'ReactDOM',
+    atnd: 'antd'
+  },
+  // 压缩
   optimization: {
     minimizer: [
-      new TerserPlugin({cache: true, parallel: true, sourceMap: true}),
-      new OptimizeCssAssetsPlugin({
-        assetNameRegExp: /\.css\.*(?!.*map)/g, // 注意不要写成 /\.css$/g
-        cssProcessor: require('cssnano'),
-        cssProcessorOptions: {
-          // 生成.css.map 文件
-          map: true,
-          discardComments: {removeAll: true},
-          safe: true,
-          autoprefixer: false
-        },
-        canPrint: true
-      })
+      new TerserPlugin({cache: true, parallel: true}),
+      new OptimizeCssAssetsPlugin()
     ]
-  },
-  node: {
-    setImmediate: false,
-    dgram: 'empty',
-    fs: 'empty',
-    net: 'empty',
-    tls: 'empty',
-    child_process: 'empty'
   }
 };

@@ -3,3 +3,6 @@ es/
 lib/
 public/
 node_modules/
+.docz/
+docs/
+mock/

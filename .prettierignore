@@ -1,5 +1,15 @@
 **/*.md
+**/*.mdx
 **/*.svg
 **/*.ejs
 **/*.html
 package.json
+dist/
+es/
+lib/
+public/
+node_modules/
+.docz/
+docs/
+coverage/
+mock/

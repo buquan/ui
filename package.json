@@ -1,6 +1,6 @@
 {
   "name": "@buquan/ui",
-  "version": "0.0.60",
+  "version": "0.0.61",
   "description": "ifss-components-tools",
   "main": "lib/index.js",
   "module": "es/index.js",

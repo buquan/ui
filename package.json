@@ -1,6 +1,6 @@
 {
   "name": "@buquan/ui",
-  "version": "0.0.55",
+  "version": "0.0.57",
   "description": "ifss-components-tools",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -15,14 +15,14 @@
     "dev:yalc:es": "onchange -i 'src' -- npm-run-all --parallel build:es build:css:es --sequential publish:yalc",
     "dev:yalc:commonjs": "onchange -i 'src' -- npm-run-all --parallel build:commonjs build:css:commonjs --sequential publish:yalc",
     "dev:yalc:umd": "onchange -i 'src' -- npm-run-all build:umd publish:yalc",
-    "build:es": "rimraf es && cross-env BABEL_ENV=es babel src -d es --ignore 'src/**/__tests__','src/**/*.test.js'",
-    "build:commonjs": "rimraf lib && cross-env BABEL_ENV=commonjs babel src -d lib --ignore 'src/**/__tests__','src/**/*.test.js'",
+    "build:es": "rimraf es && cross-env BABEL_ENV=es babel src -d es --ignore 'src/**/__tests__','src/**/*.test.js','src/**/index.umd.js'",
+    "build:commonjs": "rimraf lib && cross-env BABEL_ENV=commonjs babel src -d lib --ignore 'src/**/__tests__','src/**/index.umd.js'",
     "build:umd": "rimraf dist && cross-env BABEL_ENV=umd webpack --mode production --config scripts/webpack.config.umd.js",
     "build:css:es": "cd scripts && gulp compile-css-es",
     "build:css:commonjs": "cd scripts && gulp compile-css-commonjs",
     "publish": "npm publish --access public",
     "publish:docs": "bash deploy-docs.sh",
-    "publish:yalc": "yalc publish --push --no-scripts --changed --replace",
+    "publish:yalc": "yalc publish --push --no-scripts --replace",
     "docz:dev": "docz dev",
     "docz:build": "docz build",
     "docz:serve": "docz build && docz serve",
@@ -61,6 +61,11 @@
     "access": "public"
   },
   "author": "buquan",
+  "dependencies": {
+    "@ant-design/icons": "4.7.0",
+    "konva": "^8.3.4",
+    "react-color": "^2.19.3"
+  },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.11.4",
@@ -72,12 +77,12 @@
     "@babel/runtime": "^7.11.2",
     "@commitlint/cli": "^9.1.2",
     "@commitlint/config-conventional": "^9.1.2",
+    "@types/react-color": "^3.0.1",
     "antd": "4.18.9",
     "autoprefixer": "8.0.0",
     "babel-eslint": "^9.0.0",
     "babel-jest": "^28.1.2",
     "babel-loader": "^8.1.0",
-    "babel-plugin-import": "^1.12.0",
     "clean-webpack-plugin": "^3.0.0",
     "commitizen": "^4.2.4",
     "core-js": "^3.6.5",
@@ -106,6 +111,7 @@
     "gulp-concat": "^2.6.1",
     "gulp-filesize": "^0.0.6",
     "gulp-less": "^5.0.0",
+    "gulp-path-alias": "^1.2.1",
     "gulp-postcss": "^8.0.0",
     "gulp-rename": "^1.4.0",
     "gulp-replace": "^1.0.0",
@@ -166,6 +172,5 @@
     "commitizen": {
       "path": "./node_modules/cz-customizable"
     }
-  },
-  "dependencies": {}
+  }
 }

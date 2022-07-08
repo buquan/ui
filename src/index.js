@@ -1,5 +1,4 @@
-import MyButton from './myButton';
-import sum from './utils/sum';
+export {default as MyButton} from './myButton';
+// export { default as MarkerBoard } from './MarkerBoard';
 
-export {MyButton, sum};
-export default {MyButton, sum};
+export {default as utils} from './utils';

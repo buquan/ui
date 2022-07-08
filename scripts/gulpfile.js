@@ -10,8 +10,11 @@ const autoprefixer = require('gulp-autoprefixer');
 const size = require('gulp-filesize');
 const postcssPresetEnv = require('postcss-preset-env');
 const postcss = require('gulp-postcss');
+const alias = require('gulp-path-alias');
 
 const pac = require('../package.json');
+
+// console.log(process.env.NODE_ENV, 'process.env.NODE_ENV')
 
 let {name} = pac;
 const scoped = name.includes('/');
@@ -72,9 +75,16 @@ const compileLess = (output) => {
   return (
     gulp
       .src(lessDir)
+      .pipe(
+        alias({
+          paths: {
+            '~antd': path.resolve(__dirname, '../node_modules/antd')
+          }
+        })
+      )
       .pipe(autoprefixer())
       // 编译.less 文件
-      .pipe(less())
+      .pipe(less({javascriptEnabled: true}))
       .pipe(
         postcss([
           postcssPresetEnv({

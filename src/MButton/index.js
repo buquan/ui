@@ -1,14 +1,14 @@
 import React from 'react';
 
-console.log('mybutton init');
-const MyButton = ({text = ''}) => {
+console.log('MButton inito');
+const MButton = ({text = ''}) => {
   return (
     <div>
       <button type="button" className="myButton">
-        {text}
+        {text} kkkkdl
       </button>
     </div>
   );
 };
 
-export default MyButton;
+export default MButton;

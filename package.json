@@ -1,6 +1,6 @@
 {
   "name": "@buquan/ui",
-  "version": "0.0.90",
+  "version": "0.0.91",
   "description": "ifss-components-tools",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -24,7 +24,7 @@
     "publish": "npm publish --access public",
     "publish:docs": "bash deploy-docs.sh",
     "publish:yalc": "yalc publish --push --no-scripts --replace --changed",
-    "prepublishOnly": "standard-version",
+    "release": "standard-version",
     "docz:dev": "docz dev",
     "docz:build": "docz build",
     "docz:serve": "docz build && docz serve",

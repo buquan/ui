@@ -21,7 +21,7 @@
     "build:umd": "rimraf dist && cross-env BABEL_ENV=umd webpack --mode production --config scripts/webpack.config.umd.js",
     "build:css:es": "cd scripts && gulp compile-css-es",
     "build:css:commonjs": "cd scripts && gulp compile-css-commonjs",
-    "publish": "npm publish --access public",
+    "publish": "npm run release && npm publish --access public",
     "publish:docs": "bash deploy-docs.sh",
     "publish:yalc": "yalc publish --push --no-scripts --replace --changed",
     "docz:dev": "docz dev",
